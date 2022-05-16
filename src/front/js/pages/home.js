@@ -8,6 +8,10 @@ import { Link } from "react-router-dom";
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
+	fetch('https://3001-heylga-jwtauthenticatio-3gkjcwskhzg.ws-eu45.gitpod.io/admin')
+	.then((promise) => promise.json)
+	.then((response) => console.log('this from own backend', response))
+
 	return (
 		<div className="text-center mt-5">
 			<h1>Hello Rigo!!</h1>
