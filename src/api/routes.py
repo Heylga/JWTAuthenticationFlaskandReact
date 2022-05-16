@@ -12,7 +12,34 @@ api = Blueprint('api', __name__)
 def handle_hello():
 
     response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+        "message": "Hello! I'm sighnup which sends the saved info to Backend"
     }
-
     return jsonify(response_body), 200
+
+
+@api.route('/signup', methods=['POST'])
+def create_new_user(email, password):
+
+    body = request.get_json()
+    if body is None:
+        return {"error": "The body is null or undefined"}, 400
+     
+    User.create_user(body['email'], body['password'])
+    return jsonify({"msg": "user created"}), 200
+
+
+
+@api.route('/signup', methods=['POST'])
+def create_new_user(email, password):
+
+    body = request.get_json()
+    if body is None:
+        return {"error": "The body is null or undefined"}, 400
+     
+    User.create_user(body['email'], body['password'])
+    return jsonify({"msg": "user created"}), 200
+
+
+if __name__ == '__main__':
+    PORT = int(os.environ.get('PORT', 3000))
+    app.run(host='0.0.0.0', port=PORT, debug=False)
