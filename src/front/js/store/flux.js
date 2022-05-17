@@ -31,7 +31,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const opts = { 
 				method: 'POST',
 				headers: {
-					"Content-Type": "application/json"
+					"Content-Type": "application/json",
+					mode: 'no-cors',
 				},
 				body: JSON.stringify({
 					"email": email,
@@ -43,20 +44,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  try{
 				const resp = await fetch('https://3001-heylga-jwtauthenticatio-1yxluaboq88.ws-eu45.gitpod.io/api/token', opts)
 
-				  if (resp.status !== 200) {
+				if (resp.status !== 200) {
 					  alert("there has been some error");
 					  return false;
 				  }
-			  }
+
+				  const data = await resp.json();
+				  console.log("this came from the backend", data);
+				  sessionStorage.setItem("token", data.access_token);
+				}
+
 			  
 			  catch(error){
 				  console.error("There has been an error login in")
 			  }
+	},
 
-			  const data = await resp.json();
-			  console.log("this came from the backend", data);
-			  sessionStorage.setItem("token", data.access_token);
-			},
 
 			getMessage: () => {
 				// fetching data from the backend
