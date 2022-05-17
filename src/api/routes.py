@@ -37,7 +37,7 @@ def handle_hello():
 
 
 
-@api.route('/signup', methods=['GET', 'POST'])
+@api.route('/login', methods=['GET', 'POST'])
 def create_new_user(email, password):
 
     email = request.json.get("email", None)

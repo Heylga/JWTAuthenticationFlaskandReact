@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-import { Signup } from "../component/signup.jsx";
 import { Link } from "react-router-dom";
+import { Login } from "./login.jsx";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -18,9 +18,9 @@ export const Home = () => {
 			<p>
 				<img src={rigoImageUrl} />
 			</p>
-			<Link to="/signup">
+			<Link to="/login">
 						<button href="#" className="btn btn-outline-primary">
-							Click to Sign Up
+							Click to Log In
 						</button>
 					</Link>
 			<div className="alert alert-info">
