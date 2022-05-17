@@ -26,13 +26,16 @@ def create_token():
     return jsonify(access_token=access_token) 
 
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
+@api.route('/hello', methods=['GET'])
+# @jwt_required() 
+def get_hello():
 
-    response_body = {
-        "message": "Hello! I'm sighnup which sends the saved info to Backend"
+    email = get_jwt_identity()
+    dictionary = {
+        "message": "hello world"
     }
-    return jsonify(response_body), 200
+
+    return jsonify(dictionary), 200
 
 
 

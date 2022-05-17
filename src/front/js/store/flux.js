@@ -60,14 +60,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  }
 	},
 
+		logout: () => {
+			sessionStorage.removeItem("token");
+			console.log("Login out");
+			setStore({ token: null });
+		},
 
 			getMessage: () => {
-				// fetching data from the backend
-				fetch(process.env.BACKEND_URL + "/api/hello")
-					.then(resp => resp.json())
-					.then(data => setStore({ message: data.message }))
-					.catch(error => console.log("Error loading message from backend", error));
-			},
+
+				const store = getStore();
+				const opts = {
+					headers: {
+						"Authorization": "Bearer" + store.token
+					}
+			};
+			
+			// fetching data from the backend
+			fetch("https://3001-heylga-jwtauthenticatio-1yxluaboq88.ws-eu45.gitpod.io/api/hello", opts)
+				.then(resp => resp.json())
+				.then(data => setStore({ message: data.message }))
+				.catch(error => console.log("Error loading message from backend", error));
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
@@ -83,7 +96,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			}
 		}
-	};
-};
+	}
+}
+}
 
 export default getState;
