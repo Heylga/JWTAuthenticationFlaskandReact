@@ -19,11 +19,20 @@ class User(db.Model):
         }
 
 
-    def create_new_user(email, password):
+    def login_user(email, password):
         user = User.query.filter_by(email=email, password=password).first()
         return user
     
-    def create_user(email, password):
+    def login_user(email, password):
         user = User(email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
+
+   #this function will save the new user in the database
+    def save_user(email, password):
+        
+
+
+        #lets save the user in the database
         db.session.add(user)
         db.session.commit()

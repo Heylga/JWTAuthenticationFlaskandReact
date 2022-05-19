@@ -27,7 +27,7 @@ def create_token():
 
 
 @api.route('/hello', methods=['GET'])
-# @jwt_required() 
+@jwt_required() 
 def get_hello():
 
     email = get_jwt_identity()
@@ -39,9 +39,8 @@ def get_hello():
 
 
 
-
 @api.route('/login', methods=['GET', 'POST'])
-def create_new_user(email, password):
+def login_user(email, password):
 
     email = request.json.get("email", None)
     password = request.json.get("password", None)
@@ -55,6 +54,29 @@ def create_new_user(email, password):
     response = {"access_token":access_token}
     return response.jsonify({"msg": "user created"}), 200
 
+
+
+
+@api.route('/signup', methods=['POST'])
+def register_user(email, password):
+
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+
+    #Now we need to create a list of information which should be passed to the DataBase
+    #We dont need to mention ID here, because its set up automatically
+    our_user = User (
+
+        email = email,
+        password = password,
+        is_active = False,
+
+    )
+
+    #save the user (from models.py)
+    our_user.save_user()
+    
+    return jsonify(our_user.serialize())
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=3245, debug=True)
